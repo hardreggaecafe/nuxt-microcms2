@@ -54,7 +54,7 @@ export default {
   generate: {
     routes() {
      const careers = axios
-      .get("https://your.microcms.io/api/v1/careers", {
+      .get("https://baseball-lottery.microcms.io/api/v1/careers", {
        headers: { "X-MICROCMS-API-KEY": process.env.API_KEY }
       })
       .then(res => {
@@ -63,7 +63,7 @@ export default {
        });
       });
      const posts = axios
-      .get("https://nuxt-microcms2.microcms.io/api/v1/posts", {
+      .get("https://baseball-lottery.microcms.io/api/v1/posts", {
        headers: { "X-MICROCMS-API-KEY": process.env.API_KEY }
       })
       .then(res => {
