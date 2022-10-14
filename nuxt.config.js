@@ -1,5 +1,7 @@
 require("dotenv").config();
 const { API_KEY } = process.env;
+const axios = require("axios"); 
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -49,7 +51,34 @@ export default {
     API_KEY
   },
 
+  generate: {
+    routes() {
+     const careers = axios
+      .get("https://your.microcms.io/api/v1/careers", {
+       headers: { "X-MICROCMS-API-KEY": process.env.API_KEY }
+      })
+      .then(res => {
+       return res.data.contents.map(career => {
+        return "/careers/" + career.id;
+       });
+      });
+     const posts = axios
+      .get("https://nuxt-microcms2.microcms.io/api/v1/posts", {
+       headers: { "X-MICROCMS-API-KEY": process.env.API_KEY }
+      })
+      .then(res => {
+       return res.data.contents.map(post => {
+        return "/careers/posts/" + post.id;
+       });
+      });
+     return Promise.all([careers, posts]).then(values => {
+      return values.join().split(",");
+     });
+    }
+   },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
+
 }
